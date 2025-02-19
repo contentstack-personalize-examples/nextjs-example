@@ -1,15 +1,13 @@
 'use client';
 
-import { useContext } from 'react';
-
-import { PersonalizeContext } from './context/PersonalizeContext';
+import { usePersonalize } from './context/PersonalizeContext';
 import { InfoCardButton } from './info-card';
 
 export const ReadMoreButton = ({ title }: { title: string }) => {
-  const Personalize = useContext(PersonalizeContext);
+  const personalizeSdk = usePersonalize();
 
   const handleOnClick = async () => {
-    await Personalize.triggerEvent('readMoreButtonClick');
+    await personalizeSdk?.triggerEvent('readMoreButtonClick');
   };
 
   return (
