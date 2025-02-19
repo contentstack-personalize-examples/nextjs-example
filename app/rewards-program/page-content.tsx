@@ -1,21 +1,18 @@
 'use client';
 
-import React, {
-  useContext,
-  useState,
-} from 'react';
+import React, { useState } from 'react';
 
-import { PersonalizeContext } from '@/components/context/PersonalizeContext';
+import { usePersonalize } from '@/components/context/PersonalizeContext';
 
 export const PageContent = () => {
   const value = localStorage.getItem('isSubscribed');
   const [isSubscribed, setIsSubscribed] = useState(value === 'true');
-  const Personalize = useContext(PersonalizeContext);
+  const personalizeSdk = usePersonalize();
 
   const subscribe = async (shouldSubscribe: boolean) => {
     setIsSubscribed(shouldSubscribe);
     localStorage.setItem('isSubscribed', `${shouldSubscribe}`);
-    await Personalize.set({
+    await personalizeSdk?.set({
       isRewardMember: shouldSubscribe,
     });
   };

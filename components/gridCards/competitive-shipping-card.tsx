@@ -1,25 +1,25 @@
 'use client';
 
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { MarketingProgram } from '@/lib/types';
 
-import { PersonalizeContext } from '../context/PersonalizeContext';
+import { usePersonalize } from '../context/PersonalizeContext';
 import {
   InfoCard,
   InfoCardLink,
   InfoCardTitle,
 } from '../info-card';
 
-interface CompetitveShippingCardProps {
+interface CompetitiveShippingCardProps {
   competitiveShipping: MarketingProgram
 }
 
-const CompetitveShippingCard = ({ competitiveShipping }: CompetitveShippingCardProps) => {
-  const Personalize = useContext(PersonalizeContext);
+const CompetitiveShippingCard = ({ competitiveShipping }: CompetitiveShippingCardProps) => {
+  const personalizeSdk = usePersonalize();
   const onClickLearnMore = async (e: any) => {
     e.preventDefault();
-    await Personalize.triggerEvent('competitveShippinglearnMoreClick');
+    await personalizeSdk?.triggerEvent('competitveShippinglearnMoreClick');
   }
 
   return (
@@ -32,4 +32,4 @@ const CompetitveShippingCard = ({ competitiveShipping }: CompetitveShippingCardP
   );
 }
 
-export default CompetitveShippingCard
+export default CompetitiveShippingCard

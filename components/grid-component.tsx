@@ -5,7 +5,7 @@ import {
   ModularBlock,
 } from '@/lib/types';
 
-import CompetitveShippingCard from './gridCards/competitive-shipping-card';
+import CompetitiveShippingCard from './gridCards/competitive-shipping-card';
 import HeroCard from './gridCards/hero-card';
 import ProductUpsellCard from './gridCards/product-upsell-card';
 import RewardsProgramCard from './gridCards/rewards-program-card';
@@ -63,7 +63,7 @@ const MarketingProgramBlock = ({
   return (
     <div className='col-span-6 rounded-lg grid grid-cols-2 gap-2'>
       <RewardsProgramCard rewardsProgram={rewards_program} />
-      <CompetitveShippingCard competitiveShipping={competitive_shipping}/>
+      <CompetitiveShippingCard competitiveShipping={competitive_shipping}/>
     </div>
   );
 };

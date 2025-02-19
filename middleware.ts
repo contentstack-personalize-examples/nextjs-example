@@ -12,18 +12,17 @@ export default async function middleware(req: NextRequest) {
     Personalize.setEdgeApiUrl(process.env.NEXT_PUBLIC_CONTENTSTACK_PERSONALIZE_EDGE_API_URL);
   }
 
-  Personalize.reset();
-  await Personalize.init(projectUid, {
+  const personalizeSdk = await Personalize.init(projectUid, {
     request: req,
   });
 
-  const variantParam = Personalize.getVariantParam();
+  const variantParam = personalizeSdk.getVariantParam();
   const parsedUrl = new URL(req.url);
-  parsedUrl.searchParams.set(Personalize.VARIANT_QUERY_PARAM, variantParam);
+  parsedUrl.searchParams.set(personalizeSdk.VARIANT_QUERY_PARAM, variantParam);
 
   const response = NextResponse.rewrite(parsedUrl);
 
-  await Personalize.addStateToResponse(response);
+  personalizeSdk.addStateToResponse(response);
 
   return response;
 }
