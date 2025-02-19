@@ -1,31 +1,27 @@
 'use client';
 
-import {
-  useContext,
-  useEffect,
-} from 'react';
+import { useEffect } from 'react';
 
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-import { PersonalizeContext } from '@/components/context/PersonalizeContext';
+import { usePersonalize } from '@/components/context/PersonalizeContext';
 
 function PostAuthentication() {
   const router = useRouter();
   const { data: session, status } = useSession();
-  const Personalize = useContext(PersonalizeContext);
+  const personalizeSdk = usePersonalize();
 
   useEffect(() => {
     async function runEffect() {
-      if (status === 'authenticated') {
-        if (session.user?.email !== Personalize.getUserId()) {
-          await Personalize.setUserId(session.user?.email as string, {
+      if (status === 'authenticated' && !!personalizeSdk) {
+        if (session.user?.email !== personalizeSdk?.getUserId()) {
+          await personalizeSdk?.setUserId(session.user?.email as string, {
             preserveUserAttributes: true,
           });
         }
       } else {
         localStorage.removeItem('isSubscribed');
-        Personalize.reset();
       }
     }
 
@@ -33,7 +29,7 @@ function PostAuthentication() {
     setTimeout(() => {
       router.push('/');
     }, 1000);
-  }, [status, session]);
+  }, [status, session, personalizeSdk]);
 
   return (
     <div>
