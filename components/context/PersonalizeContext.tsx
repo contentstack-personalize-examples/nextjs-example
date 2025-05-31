@@ -30,7 +30,7 @@ export function PersonalizeProvider({
   }, []);
   return (
     <PersonalizeContext.Provider value={sdk}>
-      {children}
+      {sdk && children}
     </PersonalizeContext.Provider>
   );
 }
